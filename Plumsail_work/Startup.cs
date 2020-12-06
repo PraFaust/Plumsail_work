@@ -40,6 +40,7 @@ namespace Plumsail_work
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
 
+            // maybe need only AddControllers, withot view...
             services.AddControllersWithViews();
         }
 
@@ -79,6 +80,11 @@ namespace Plumsail_work
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=register}/{registrationData?}");
+            });
+            // for API controller routes
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
             });
         }
     }
