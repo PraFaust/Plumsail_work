@@ -19,10 +19,6 @@ namespace Plumsail_work.Controllers
         {
             db = context;
         }
-        public IActionResult Index()
-        {
-            return View(db.Users.ToList());
-        }
 
         public string login()
         {
