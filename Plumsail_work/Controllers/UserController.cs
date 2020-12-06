@@ -10,12 +10,12 @@ using System.Text.Json;
 
 namespace Plumsail_work.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
         UserContext db;
         JSONDataLogin loginJSON;
         JSONDataReg registerJSON;
-        public HomeController(UserContext context)
+        public UserController(UserContext context)
         {
             db = context;
         }
