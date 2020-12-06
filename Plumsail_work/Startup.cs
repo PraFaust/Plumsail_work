@@ -40,8 +40,7 @@ namespace Plumsail_work
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
 
-            // maybe need only AddControllers, withot view...
-            services.AddControllersWithViews();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

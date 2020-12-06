@@ -85,12 +85,5 @@ namespace Plumsail_work.Controllers
             // Registration success;
             return JsonSerializer.Serialize<JSONRegResponse>(response); ;
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
     }
 }
