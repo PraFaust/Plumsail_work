@@ -5,10 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Plumsail_work.Models;                 // пространство имен моделей
 using Microsoft.EntityFrameworkCore;        // пространство имен EntityFramework
+using Microsoft.Extensions.FileProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Plumsail_work
 {
@@ -54,6 +56,8 @@ namespace Plumsail_work
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -62,12 +66,15 @@ namespace Plumsail_work
 
             app.UseCors(MyAllowSpecificOrigins);
 
-            app.UseEndpoints(endpoints =>
+            app.UseFileServer(new FileServerOptions()
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "node_modules")
+                ),
+                RequestPath = "/node_modules",
+                EnableDirectoryBrowsing = false
             });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
