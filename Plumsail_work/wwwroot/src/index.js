@@ -4,8 +4,6 @@ let BDFields = new Set();
 let users;
 
 async function GetAllUsers() {
-    console.log(`...`)
-
     const response = await fetch("/api/usersearch", {
         method: "GET",
         headers: { "Accept": "application/json" }
@@ -88,9 +86,10 @@ async function search() {
     var filter = new Object();
     const form = document.forms["userForm"];
     for (field of BDFields) {
-        filter[field] = form.elements[field].value;
+        if (form.elements[field].value != "") {
+            filter[field] = form.elements[field].value;
+        }
     }
-
     ClearTable();
     await GetAllUsers();
     CreateTable(filter);
@@ -169,8 +168,6 @@ function rowAdd(user) {
 }
 
 function ClearTable() {
-   /* var body = document.getElementById("tBody");
-    body.children.remove();*/
     var table = document.getElementById("tBody");
     while (table.rows.length > 0) {
         table.deleteRow(0);
@@ -193,26 +190,29 @@ function CreateTable(filter) {
     // заменяем существующий элемент sp2 на созданный нами sp1
     parentTr.replaceChild(tr, tr2);
 
-    console.log(`CreateTable()...`);
+    var FilterEnable = 0;
+    if (filter) {
+        FilterEnable = (Object.keys(filter).length != 0)
+    }
+    
     // Create Body
     users.forEach(user => {
-        if (filter) {
-            console.log(`...filter...`);
+        if (FilterEnable) {
             console.dir(filter);
-            var keys = Object.keys(user);
+            var keys = Object.keys(filter);
             console.log(keys);
+            var counter = 0;
             for (let i = 0; i < keys.length; i++) {
-                console.log(`keys[i] = ${keys[i]}`);
-                console.log(`user.keys[i] = ${user[keys[i]]}`);
-                console.log(`filter.keys[i] = ${filter[keys[i]]}`);
-                if (user[keys[i]] === filter[keys[i]]) {
-                    console.log(`...filter match...`);
-                    rowAdd(user);
+                for (key in user) {
+                    if (String(user[key]) === String(filter[keys[i]]) & key === keys[i]) {
+                        counter++;
+                    }
+                    if (counter === keys.length) {
+                        rowAdd(user);                       
+                    }
                 }
             }
-
         } else {
-            console.log(`...no filter`);
             rowAdd(user);
         }
     });
