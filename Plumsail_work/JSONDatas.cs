@@ -21,7 +21,7 @@ namespace Plumsail_work
         public string pass { get; set; }
         public string rePass { get; set; }
         public string sex { get; set; }
-        public string[] newsletter { get; set; }
+        public string newsletter { get; set; }
     }
 
     public class JSONLoginResponse 

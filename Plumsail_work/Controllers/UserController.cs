@@ -74,7 +74,7 @@ namespace Plumsail_work.Controllers
                         email = registerJSON.email,
                         pass = registerJSON.pass,
                         sex = registerJSON.sex,
-                        newsletter = ((registerJSON.newsletter[0] == "news_accept")?true:false)
+                        newsletter = ((registerJSON.newsletter == "news_accept")?true:false)
                     }
             );
             db.SaveChanges();
