@@ -10,7 +10,11 @@ namespace Plumsail_work
     {
         public static void Initialize(UserContext context)
         {
-            if (!context.Users.Any())
+            var admin = context.Users
+                    .Where(b => b.username == "Admin")
+                    .FirstOrDefault();
+
+            if (admin == null)
             {
                 context.Users.AddRange(
                     new User
@@ -26,6 +30,8 @@ namespace Plumsail_work
                 );
                 context.SaveChanges();
             }
+
+            Console.WriteLine("admin id is " + admin.id);
         }
     }
 }
